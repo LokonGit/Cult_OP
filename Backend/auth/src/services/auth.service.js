@@ -1,6 +1,9 @@
 const bcrypt = require("bcryptjs");
 const { findUserByEmail, createUser, upsertProfile } = require("../models/user.model");
 const { generateToken } = require("../utils/jwt.utils");
+require("dotenv").config();
+
+const admin_key=process.env.admin_secret_key
 
 const registerUser = async ({ name, email, password }) => {
   // Check if user already exists
@@ -17,6 +20,7 @@ const registerUser = async ({ name, email, password }) => {
 
   // Generate JWT
   const token = generateToken({ id: user.id, role: user.role });
+
 
   return { user, token };
 };
