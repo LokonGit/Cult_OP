@@ -6,12 +6,12 @@ const userModel = require('../models/user.model');
 const register = async ({ enrollment_no, name, email, password }) => {
   const existingUserByEnrollment = await userModel.findByEnrollmentNo(enrollment_no);
   if (existingUserByEnrollment) {
-    throw new Error('Enrollment number already taken');
+    throw new Error('Enrollment number already registered');
   }
 
   const existingUserByEmail = await userModel.findByEmail(email);
   if (existingUserByEmail) {
-    throw new Error('Email already taken');
+    throw new Error('Email already registered');
   }
 
   const password_hash = await bcrypt.hash(password, 10);
