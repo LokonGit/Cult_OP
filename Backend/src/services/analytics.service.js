@@ -1,17 +1,30 @@
 const supabase = require('../config/supabase');
 
 const getTopAssets = async (limit = 10) => {
-  const { data, error } = await supabase
+  // Fetch all booking asset IDs
+  const { data: bookings, error } = await supabase
     .from('bookings')
-    .select('asset_id, count(*) as booking_count')
-    .group('asset_id')
-    .order('booking_count', { ascending: false })
-    .limit(limit);
+    .select('asset_id');
 
   if (error) throw error;
 
-  // Join with assets to get name and category
-  const assetIds = data.map(item => item.asset_id);
+  // Count bookings per asset
+  const bookingCounts = Object.entries(
+    bookings.reduce((acc, { asset_id }) => {
+      acc[asset_id] = (acc[asset_id] || 0) + 1;
+      return acc;
+    }, {})
+  )
+    .map(([asset_id, booking_count]) => ({
+      asset_id: Number(asset_id), // Remove Number() if your IDs are UUID strings
+      booking_count,
+    }))
+    .sort((a, b) => b.booking_count - a.booking_count)
+    .slice(0, limit);
+
+  // Get the corresponding asset details
+  const assetIds = bookingCounts.map(item => item.asset_id);
+
   const { data: assets, error: assetsError } = await supabase
     .from('assets')
     .select('id, name, category')
@@ -19,17 +32,18 @@ const getTopAssets = async (limit = 10) => {
 
   if (assetsError) throw assetsError;
 
-  return data.map(item => {
+  // Merge the booking counts with asset information
+  return bookingCounts.map(item => {
     const asset = assets.find(a => a.id === item.asset_id);
+
     return {
       asset_id: item.asset_id,
       name: asset?.name || 'Unknown',
       category: asset?.category || 'Unknown',
-      booking_count: item.booking_count
+      booking_count: item.booking_count,
     };
   });
 };
-
 const getUtilizationRates = async () => {
   const { data: assets, error } = await supabase.from('assets').select('*');
   if (error) throw error;
@@ -101,11 +115,21 @@ const getBookingTrend = async (days = 30) => {
 const getCategoryDistribution = async () => {
   const { data, error } = await supabase
     .from('assets')
-    .select('category, count(*) as asset_count')
-    .group('category');
+    .select('category');
 
   if (error) throw error;
-  return data;
+
+  const distribution = Object.entries(
+    data.reduce((acc, { category }) => {
+      acc[category] = (acc[category] || 0) + 1;
+      return acc;
+    }, {})
+  ).map(([category, asset_count]) => ({
+    category,
+    asset_count,
+  }));
+
+  return distribution;
 };
 
 const getDashboardSummary = async () => {
