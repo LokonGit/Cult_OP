@@ -23,7 +23,7 @@ const useAnalytics = () => {
       try {
         setLoading(true);
         const [dashboard, topAssets, utilization, bookingTrend, categoryDist] =
-          await Promise.all([
+          await Promise.allSettled([
             getDashboardSummary(),
             getTopAssets(),
             getUtilizationRates(),
@@ -31,11 +31,11 @@ const useAnalytics = () => {
             getCategoryDistribution(),
           ]);
         setData({
-          dashboard: dashboard.data.data,
-          topAssets: topAssets.data.data,
-          utilization: utilization.data.data,
-          bookingTrend: bookingTrend.data.data,
-          categoryDist: categoryDist.data.data,
+          dashboard: dashboard.value?.data?.data || null,
+          topAssets: topAssets.value?.data?.data || null,
+          utilization: utilization.value?.data?.data || null,
+          bookingTrend: bookingTrend.value?.data?.data || null,
+          categoryDist: categoryDist.value?.data?.data || null,
         });
       } catch (err) {
         setError(err.response?.data?.error || 'Something went wrong');

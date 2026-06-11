@@ -18,15 +18,15 @@ const AdminBookings = () => {
     }
   };
 
-  const columns = [
-    { key: 'id', label: 'ID', render: (row) => row.id.slice(0, 8) + '...' },
-    { key: 'asset', label: 'Asset', render: (row) => row.asset?.name || '-' },
-    { key: 'user', label: 'User', render: (row) => row.user?.name || '-' },
-    { key: 'quantity', label: 'Qty' },
-    { key: 'requested_from', label: 'From', render: (row) => formatDate(row.requested_from) },
-    { key: 'requested_until', label: 'Until', render: (row) => formatDate(row.requested_until) },
-    { key: 'status', label: 'Status', render: (row) => <Badge status={row.status} /> },
-  ];
+ const columns = [
+{ key: 'id', label: 'No.', render: (_, i) => i + 1 },
+  { key: 'asset_id', label: 'Asset', render: (row) => row.asset?.name || row.asset_id?.slice(0, 8) + '...' },
+  { key: 'enrollment_no', label: 'User', render: (row) => row.user?.name || row.enrollment_no },
+  { key: 'quantity', label: 'Qty' },
+  { key: 'requested_from', label: 'From', render: (row) => formatDate(row.requested_from) },
+  { key: 'requested_until', label: 'Until', render: (row) => formatDate(row.requested_until) },
+  { key: 'status', label: 'Status', render: (row) => <Badge status={row.status} /> },
+];
 
   if (loading) return <Spinner />;
   if (error) return <p className="text-red-500">{error}</p>;

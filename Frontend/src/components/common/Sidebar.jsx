@@ -42,7 +42,7 @@ const Sidebar = () => {
       </nav>
       <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
         <p className="text-xs text-gray-400 dark:text-gray-500">Logged in as</p>
-        <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{user?.name}</p>
+        <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{user?.name || user?.enrollment_no}</p>
         <p className="text-xs text-gray-400 dark:text-gray-500">{user?.role}</p>
       </div>
     </div>

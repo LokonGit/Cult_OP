@@ -10,7 +10,7 @@ const useAssets = () => {
     try {
       setLoading(true);
       const res = await getAllAssets();
-      setAssets(res.data.data);
+      setAssets(res.data.data.data || res.data.data);
     } catch (err) {
       setError(err.response?.data?.error || 'Something went wrong');
     } finally {

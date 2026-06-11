@@ -13,8 +13,9 @@ const StatCard = ({ title, value }) => (
 
 const UserDashboard = () => {
   const { user } = useAuth();
-  const { bookings, loading, error } = useBookings();
-
+  const { bookings: rawBookings, loading, error } = useBookings();
+  const bookings = Array.isArray(rawBookings) ? rawBookings : [];
+  
   if (loading) return <Spinner />;
   if (error) return <p className="text-red-500">{error}</p>;
 

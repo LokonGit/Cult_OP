@@ -11,7 +11,7 @@ const Navbar = () => {
       </h1>
       <div className="flex items-center gap-4">
         <ThemeToggle />
-        <span className="text-sm text-gray-600 dark:text-gray-300">{user?.name}</span>
+        <span className="text-sm text-gray-600 dark:text-gray-300">{user?.name  || user?.enrollment_no }</span>
         <button
           onClick={logout}
           className="text-sm text-red-500 hover:text-red-600 font-medium"

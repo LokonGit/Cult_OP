@@ -10,7 +10,7 @@ const useBookings = (isAdmin = false) => {
     try {
       setLoading(true);
       const res = isAdmin ? await getAllBookings() : await getMyBookings();
-      setBookings(res.data.data);
+     setBookings(res.data.data.data || res.data.data);
     } catch (err) {
       setError(err.response?.data?.error || 'Something went wrong');
     } finally {
