@@ -18,6 +18,10 @@
 
 ---
 
+---
+### [Deliverables](https://drive.google.com/drive/folders/1vdBn836p6gLMXNURSehqQ9ARHJJ3I9Xg?usp=sharing)
+---
+
 ## Overview
 
 The Asset Management System allows students and council members to browse and request assets (equipment, props, instruments, etc.), while admins manage the full lifecycle — approving, issuing, and marking returns. All booking statuses are tracked in real time and visible to the requesting user.
@@ -169,10 +173,6 @@ Refer to `Frontend/.env.example` for all required keys. Key variables include:
 | `VITE_API_BASE_URL` | Full base URL of the backend (e.g. `http://localhost:5000/api/v1`) |
 
 >  Make sure `VITE_API_BASE_URL` matches the `PORT` set in your backend `.env`.
-
----
-### Drive Link for demo : https://drive.google.com/file/d/1fIy7r30XvDW2ID0Lq1oMX3izrl_99FSC/view?usp=sharing
----
 
 ## API Reference
 
