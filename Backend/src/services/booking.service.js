@@ -57,7 +57,7 @@ const approveBooking = async (id, admin_enrollment_no) => {
 
   await bookingModel.updateBookingStatus(id, 'approved', null);
   await auditLogService.log({
-    actor_enrollment_no,
+  actor_enrollment_no: admin_enrollment_no,
     action: 'booking_approved',
     entity_type: 'booking',
     entity_id: id,
@@ -79,7 +79,7 @@ const rejectBooking = async (id, admin_enrollment_no, note) => {
 
   await bookingModel.updateBookingStatus(id, 'rejected', note);
   await auditLogService.log({
-    actor_enrollment_no,
+  actor_enrollment_no: admin_enrollment_no,
     action: 'booking_rejected',
     entity_type: 'booking',
     entity_id: id,
@@ -101,10 +101,10 @@ const issueAsset = async (id, admin_enrollment_no) => {
 
   await bookingModel.setIssuedAt(id);
   await bookingModel.updateBookingStatus(id, 'issued', null);
-  await assetModel.decrementAvailable(booking.asset_id, booking.quantity);
+  await assetModel.decrementAvailable(booking.asset_id, parseInt(booking.quantity));
 
   await auditLogService.log({
-    actor_enrollment_no,
+    actor_enrollment_no: admin_enrollment_no,
     action: 'asset_issued',
     entity_type: 'booking',
     entity_id: id,
@@ -126,10 +126,10 @@ const returnAsset = async (id, admin_enrollment_no) => {
 
   await bookingModel.setReturnedAt(id);
   await bookingModel.updateBookingStatus(id, 'returned', null);
-  await assetModel.incrementAvailable(booking.asset_id, booking.quantity);
+  await assetModel.incrementAvailable(booking.asset_id, parseInt(booking.quantity));
 
   await auditLogService.log({
-    actor_enrollment_no,
+    actor_enrollment_no: admin_enrollment_no,
     action: 'asset_returned',
     entity_type: 'booking',
     entity_id: id,

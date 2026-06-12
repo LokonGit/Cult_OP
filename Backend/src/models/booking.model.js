@@ -25,7 +25,7 @@ const getBookingById = async (id) => {
 const getBookingsByEnrollment = async (enrollment_no, { page = 1, limit = 20 }) => {
   const { data, error, count } = await supabase
     .from('bookings')
-    .select('*', { count: 'exact' })
+    .select('*, asset:assets(id, name, category)', { count: 'exact' })
     .eq('enrollment_no', enrollment_no)
     .range((page - 1) * limit, page * limit - 1);
 
@@ -34,7 +34,9 @@ const getBookingsByEnrollment = async (enrollment_no, { page = 1, limit = 20 }) 
 };
 
 const getAllBookings = async ({ status, asset_id, enrollment_no, page = 1, limit = 20 }) => {
-  let query = supabase.from('bookings').select('*', { count: 'exact' });
+  let query = supabase
+    .from('bookings')
+    .select('*, asset:assets(id, name, category), user:users(enrollment_no, name)', { count: 'exact' });
 
   if (status) query = query.eq('status', status);
   if (asset_id) query = query.eq('asset_id', asset_id);

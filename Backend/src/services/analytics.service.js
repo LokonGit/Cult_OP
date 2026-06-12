@@ -37,7 +37,7 @@ const getTopAssets = async (limit = 10) => {
     const asset = assets.find(a => a.id === item.asset_id);
 
     return {
-      asset_id: item.asset_id,
+      asset_id,
       name: asset?.name || 'Unknown',
       category: asset?.category || 'Unknown',
       booking_count: item.booking_count,

@@ -51,7 +51,7 @@ const approveBooking = async (req, res, next) => {
 
 const rejectBooking = async (req, res, next) => {
   try {
-    const booking = await bookingService.rejectBooking(req.params.id, req.user.enrollment_no, req.body.note);
+    const booking = await bookingService.rejectBooking(req.params.id, req.user.enrollment_no, req.body?.note || null);
     successResponse(res, booking, 'Booking rejected successfully');
   } catch (error) {
     next(error);
