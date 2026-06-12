@@ -1,5 +1,5 @@
 import { useAuth } from '../../context/AuthContext';
-import ThemeToggle from './ThemeToggle';
+
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -10,7 +10,6 @@ const Navbar = () => {
         Asset Management System
       </h1>
       <div className="flex items-center gap-4">
-        <ThemeToggle />
         <span className="text-sm text-gray-600 dark:text-gray-300">{user?.name  || user?.enrollment_no }</span>
         <button
           onClick={logout}
