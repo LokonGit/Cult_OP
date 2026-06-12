@@ -1,6 +1,7 @@
 #  Asset Management System
 
 > A full-stack web application built for **IIT Roorkee's Cultural Council** to streamline the booking, issuance, and return of physical assets — replacing manual processes with a clean, role-based digital workflow.
+> by @uttkarshshrivastav & @LokonGit
 
 ---
 
@@ -169,6 +170,8 @@ Refer to `Frontend/.env.example` for all required keys. Key variables include:
 
 >  Make sure `VITE_API_BASE_URL` matches the `PORT` set in your backend `.env`.
 
+---
+### Drive Link for demo : https://drive.google.com/file/d/1fIy7r30XvDW2ID0Lq1oMX3izrl_99FSC/view?usp=sharing
 ---
 
 ## API Reference
